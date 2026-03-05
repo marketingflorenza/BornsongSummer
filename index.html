@@ -7,15 +7,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Noto+Sans+Thai:wght@300;400;600;700&family=Cherry+Bomb+One&display=swap" rel="stylesheet">
 <style>
   :root {
-    --p-deep:     #C2185B; 
-    --p-mid:      #EC407A; 
-    --p-soft:     #F48FB1; 
-    --p-pale:     #FCE4EC; 
-    --sea-blue:   #4FC3F7; 
-    --sea-deep:   #0288D1; 
-    --sand:       #FFF5F8; 
-    --gold:       #FFD54F; 
-    --white:      #FFFFFF;
+    --p-deep:      #C2185B; 
+    --p-mid:       #EC407A; 
+    --p-soft:      #F48FB1; 
+    --p-pale:      #FCE4EC; 
+    --sea-blue:    #4FC3F7; 
+    --sea-deep:    #0288D1; 
+    --sand:        #FFF5F8; 
+    --gold:        #FFD54F; 
+    --white:       #FFFFFF;
   }
 
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -28,7 +28,6 @@
     color: var(--p-deep);
   }
 
- 
   .island-bg {
     position: fixed; inset: 0; z-index: 0; pointer-events: none;
     background: linear-gradient(to bottom, #81D4FA 0%, var(--sea-blue) 30%, var(--p-pale) 70%, var(--sand) 100%);
@@ -57,7 +56,7 @@
     to { transform: translateY(-20px) rotate(5deg); }
   }
 
-  .surfboard { top: 15%; left: -20px; font-size: 110px; transform: rotate(15deg); }
+  /* เอาสไตล์ surfboard ออก */
   .beachball { bottom: 12%; right: 5%; font-size: 85px; animation-delay: -1s; }
   .sun { top: 3%; right: 3%; font-size: 90px; filter: drop-shadow(0 0 40px var(--gold)); }
   .drink { bottom: 15%; left: 3%; font-size: 75px; animation-delay: -2s; }
@@ -123,7 +122,6 @@
     text-shadow: 0 2px 8px rgba(0,0,0,0.4); font-weight: 700; text-align: center;
   }
 
-  /* ── SCRATCH BOX ── */
   .scratch-section {
     display: none; width: min(92vw, 540px);
     margin-top: 40px; text-align: center;
@@ -162,7 +160,6 @@
   }
   .btn-action:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(194, 24, 91, 0.5); }
 
-  /* ── MODALS ── */
   #winModal {
     display: none; position: fixed; inset: 0; z-index: 100;
     background: rgba(0, 136, 209, 0.3); backdrop-filter: blur(15px);
@@ -199,7 +196,7 @@
   <div class="wave-decor"></div>
   <div class="wave-decor-pink"></div>
   <div class="prop sun">☀️</div>
-  <div class="prop surfboard">🏄‍♀️</div>
+  <!-- เอา surfboard ออกแล้ว -->
   <div class="prop beachball">🏐</div>
   <div class="prop drink">🍹</div>
 </div>
@@ -277,7 +274,6 @@
 
 <script>
 // --- Configuration ---
-// ใช้ URL ของ Google Apps Script ที่ Deploy แบบ "Anyone"
 const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbzTrPZIBAIPM2cK7VcQqRNcqpxng_7xa1I9nAhIuJ-iB1bawa2_lQjqIPCF8XH8nR-K/exec"; 
 
 const prizes = [
@@ -295,7 +291,6 @@ const prizes = [
 
 let canvas, ctx, isScratching = false, isDone = false, currentPrize = null;
 
-// ระบบป้องกันการเล่นซ้ำ
 window.onload = () => {
   const hasPlayed = localStorage.getItem('bornsong_island_v2');
   const savedPrize = localStorage.getItem('bornsong_prize_v2');
@@ -324,7 +319,6 @@ function initCanvas() {
   canvas.width = wrap.clientWidth; canvas.height = wrap.clientHeight;
   ctx = canvas.getContext('2d', { willReadFrequently: true });
   
-  // Holographic Water Texture
   const grad = ctx.createLinearGradient(0,0, canvas.width, canvas.height);
   grad.addColorStop(0, '#81D4FA');
   grad.addColorStop(0.5, '#B2EBF2');
@@ -332,7 +326,6 @@ function initCanvas() {
   ctx.fillStyle = grad;
   ctx.fillRect(0,0, canvas.width, canvas.height);
   
-  // Sea Bubbles
   for(let i=0; i<300; i++){
     ctx.fillStyle = `rgba(255,255,255,${Math.random()*0.8})`;
     ctx.beginPath();
@@ -398,7 +391,6 @@ function partyConfetti() {
   }
 }
 
-// --- บันทึกข้อมูลไปยัง Google Sheets ---
 document.getElementById('claimForm').onsubmit = async (e) => {
   e.preventDefault();
   const btn = document.getElementById('submitBtn');
@@ -428,7 +420,6 @@ document.getElementById('claimForm').onsubmit = async (e) => {
       });
     }
     
-    // รีโหลดเพื่อแสดงหน้าสถานะ Already Played
     location.reload(); 
   } catch (err) {
     localStorage.setItem('bornsong_island_v2', 'true');
